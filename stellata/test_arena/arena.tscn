@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="1"]
+[ext_resource type="Script" path="res://test_arena/arena.gd" id="2"]
+[ext_resource type="Script" path="res://test_arena/target.gd" id="3"]
+[ext_resource type="Script" path="res://test_arena/pulse.gd" id="4"]
+
+[sub_resource type="CircleShape2D" id="Hurt"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="Pulse"]
+radius = 68.0
+
+[node name="TestArena" type="Node2D"]
+script = ExtResource("2")
+
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(-65, 0)
+
+[node name="Target" type="Node2D" parent="."]
+script = ExtResource("3")
+
+[node name="Hurtbox" type="Area2D" parent="Target"]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target/Hurtbox"]
+shape = SubResource("Hurt")
+
+[node name="Pulse" type="Area2D" parent="Target"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+script = ExtResource("4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target/Pulse"]
+shape = SubResource("Pulse")
+disabled = true
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Status" type="Label" parent="HUD"]
+offset_left = 16.0
+offset_top = 12.0
